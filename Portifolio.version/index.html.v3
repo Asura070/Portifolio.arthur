@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Arthur Barbosa — Desenvolvedor Web Full-Stack. Sites, sistemas de gestão personalizados e automações para o seu negócio." />
+  <meta name="author" content="Arthur Barbosa" />
+  <title>Arthur Barbosa | Desenvolvedor Web Full-Stack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #0a0e1a; --bg-soft: #111827; --accent: #10b981; --accent-2: #06b6d4; --text: #e5e7eb; --muted: #9ca3af; }
+    * { -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    .bg-grid {
+      background-image: radial-gradient(circle at 20% 0%, rgba(16,185,129,0.08), transparent 40%), radial-gradient(circle at 80% 100%, rgba(6,182,212,0.08), transparent 40%), linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: auto, auto, 40px 40px, 40px 40px;
+    }
+    .gradient-text { background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .btn-glow { position: relative; transition: all 0.3s ease; }
+    .btn-glow::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(135deg, #10b981, #06b6d4); border-radius: inherit; opacity: 0; filter: blur(12px); transition: opacity 0.3s ease; z-index: -1; }
+    .btn-glow:hover::before { opacity: 0.7; }
+    .btn-glow:hover { transform: translateY(-2px); }
+    .card { background: rgba(17,24,39,0.6); border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .card:hover { transform: translateY(-6px); border-color: rgba(16,185,129,0.4); box-shadow: 0 20px 40px -10px rgba(16,185,129,0.2); }
+    .mockup { background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+    .mockup-bar { display: flex; align-items: center; gap: 6px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .mockup-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .reveal { opacity: 0; transform: translateY(15px); transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: #374151; }
+    @keyframes pulse-dot { 0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.6); } 50% { box-shadow: 0 0 0 8px rgba(16,185,129,0); } }
+    .pulse-dot { animation: pulse-dot 2s infinite; }
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .mobile-menu.open { max-height: 450px; }
+    @keyframes float-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    .float-bounce { animation: float-bounce 3s ease-in-out infinite; }
+    .tag { display: inline-block; padding: 4px 10px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: #10b981; border-radius: 999px; font-size: 12px; font-weight: 500; }
+    .tag.cyan { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.3); color: #06b6d4; }
+    .tag.amber { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: #f59e0b; }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .faq-question { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 0; transition: color 0.3s ease; }
+    .faq-question:hover { color: #10b981; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.4s ease; padding: 0 0; color: #9ca3af; font-size: 0.95rem; line-height: 1.6; }
+    .faq-item.active .faq-answer { max-height: 300px; padding: 0 0 1.25rem 0; }
+    .faq-icon { transition: transform 0.3s ease; flex-shrink: 0; }
+    .faq-item.active .faq-icon { transform: rotate(180deg); }
+
+    /* MODAIS */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal-content { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; max-width: 520px; width: 90%; max-height: 90vh; overflow-y: auto; transform: scale(0.9) translateY(20px); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); padding: 0; }
+    .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
+    .modal-header { padding: 24px 24px 0; display: flex; justify-content: space-between; align-items: center; }
+    .modal-body { padding: 20px 24px 24px; }
+    .modal-close { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .modal-close:hover { background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.3); }
+
+    /* Calendário */
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 12px; }
+    .calendar-day-header { text-align: center; font-size: 11px; color: #6b7280; font-weight: 600; padding: 8px 0; }
+    .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 13px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; color: #d1d5db; }
+    .calendar-day:hover:not(.disabled):not(.selected) { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: #10b981; }
+    .calendar-day.selected { background: linear-gradient(135deg, #10b981, #06b6d4); color: #0a0e1a; font-weight: 700; box-shadow: 0 4px 15px rgba(16,185,129,0.3); }
+    .calendar-day.disabled { color: #374151; cursor: not-allowed; }
+    .calendar-day.today { border-color: rgba(16,185,129,0.5); color: #10b981; }
+    .calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .calendar-nav button { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .calendar-nav button:hover { background: rgba(16,185,129,0.1); color: #10b981; border-color: rgba(16,185,129,0.3); }
+    .calendar-month-year { font-weight: 700; font-size: 15px; color: #e5e7eb; }
+
+    /* Time slots */
+    .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    .time-slot { padding: 10px 8px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: #9ca3af; font-size: 13px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .time-slot:hover:not(.disabled):not(.selected) { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.3); color: #06b6d4; }
+    .time-slot.selected { background: linear-gradient(135deg, #06b6d4, #0891b2); color: #0a0e1a; font-weight: 700; box-shadow: 0 4px 15px rgba(6,182,212,0.3); }
+    .time-slot.disabled { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+
+    /* Form */
+    .form-input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: #e5e7eb; font-size: 14px; font-family: inherit; transition: all 0.2s; outline: none; }
+    .form-input:focus { border-color: rgba(16,185,129,0.5); box-shadow: 0 0 0 3px rgba(16,185,129,0.1); }
+    .form-input::placeholder { color: #4b5563; }
+    .form-label { display: block; font-size: 12px; font-weight: 600; color: #9ca3af; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Service selector */
+    .service-option { padding: 12px 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; }
+    .service-option:hover:not(.selected) { background: rgba(16,185,129,0.05); border-color: rgba(16,185,129,0.2); }
+    .service-option.selected { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.4); }
+    .service-option .check-circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+    .service-option.selected .check-circle { background: #10b981; border-color: #10b981; }
+    .service-option.selected .check-circle::after { content: '✓'; color: #0a0e1a; font-size: 12px; font-weight: 700; }
+
+    /* Steps */
+    .step-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.1); transition: all 0.3s; }
+    .step-dot.active { background: #10b981; box-shadow: 0 0 10px rgba(16,185,129,0.4); }
+    .step-dot.completed { background: #06b6d4; }
+    .progress-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; margin-bottom: 20px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981, #06b6d4); border-radius: 2px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
+
+    @keyframes success-pop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+    .success-icon { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #06b6d4); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: success-pop 0.5s cubic-bezier(0.4,0,0.2,1) forwards; }
+    .success-icon svg { width: 40px; height: 40px; color: #0a0e1a; }
+
+    /* ERP */
+    .erp-widget { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 16px; border: 1px solid rgba(255,255,255,0.05); }
+    .chart-bar { transition: height 0.6s cubic-bezier(0.4,0,0.2,1); }
+    .tooltip { position: relative; }
+    .tooltip::after { content: attr(data-tip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-6px); background: #1f2937; color: #e5e7eb; padding: 6px 12px; border-radius: 8px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.08); }
+    .tooltip:hover::after { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+    /* Payment */
+    .boleto-card { background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.02)); border: 1px solid rgba(245,158,11,0.2); border-radius: 12px; padding: 16px; transition: all 0.3s; cursor: pointer; }
+    .boleto-card:hover { border-color: rgba(245,158,11,0.4); transform: translateX(4px); }
+    .pix-card { background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.02)); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; padding: 16px; transition: all 0.3s; cursor: pointer; }
+    .pix-card:hover { border-color: rgba(16,185,129,0.4); transform: translateX(4px); }
+
+    /* Demo float */
+    .demo-float { position: fixed; bottom: 24px; left: 24px; z-index: 50; background: linear-gradient(135deg, #10b981, #06b6d4); color: #0a0e1a; font-weight: 700; padding: 12px 20px; border-radius: 14px; box-shadow: 0 8px 30px rgba(16,185,129,0.3); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .demo-float:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(16,185,129,0.4); }
+    @media (max-width: 768px) { .demo-float { display: none; } }
+
+    /* Toast */
+    @keyframes toast-in { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes toast-out { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+    .toast { position: fixed; top: 90px; right: 24px; background: #111827; border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; padding: 14px 20px; z-index: 200; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); animation: toast-in 0.3s ease forwards; }
+    .toast.hiding { animation: toast-out 0.3s ease forwards; }
+    .toast-icon { width: 28px; height: 28px; border-radius: 50%; background: rgba(16,185,129,0.15); display: flex; align-items: center; justify-content: center; }
+    .toast-icon svg { width: 16px; height: 16px; color: #10b981; }
+
+    @keyframes confetti-fall { 0% { transform: translateY(-10px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+    .confetti { position: fixed; width: 10px; height: 10px; z-index: 300; pointer-events: none; animation: confetti-fall 2s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-grid">
+
+  <!-- Botão flutuante de demonstração -->
+  <div class="demo-float" onclick="openModal('modal-demo')">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    Ver Demonstrações
+  </div>
+
+  <!-- ===================== MODAIS ===================== -->
+
+  <!-- Modal de Agendamento -->
+  <div id="modal-agendamento" class="modal-overlay" onclick="closeModal(event, 'modal-agendamento')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h3 class="text-xl font-bold">Agendar Demonstração</h3>
+          <p class="text-sm text-gray-500 mt-1">Escolha data, horário e serviço</p>
+        </div>
+        <button class="modal-close" onclick="closeModalDirect('modal-agendamento')">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="progress-bar"><div class="progress-fill" id="agendamento-progress" style="width: 25%"></div></div>
+        <div class="step-dots">
+          <div class="step-dot active" id="dot-1"></div>
+          <div class="step-dot" id="dot-2"></div>
+          <div class="step-dot" id="dot-3"></div>
+          <div class="step-dot" id="dot-4"></div>
+        </div>
+
+        <!-- Etapa 1: Serviço -->
+        <div id="step-1">
+          <p class="form-label">Qual serviço você precisa?</p>
+          <div class="space-y-2" id="service-list">
+            <div class="service-option selected" data-service="Site Institucional" onclick="selectService(this)">
+              <div class="check-circle"></div>
+              <div><div class="font-semibold text-sm">Site Institucional</div><div class="text-xs text-gray-500">Presença online profissional</div></div>
+            </div>
+            <div class="service-option" data-service="Landing Page" onclick="selectService(this)">
+              <div class="check-circle"></div>
+              <div><div class="font-semibold text-sm">Landing Page</div><div class="text-xs text-gray-500">Alta conversão para campanhas</div></div>
+            </div>
+            <div class="service-option" data-service="Sistema Customizado" onclick="selectService(this)">
+              <div class="check-circle"></div>
+              <div><div class="font-semibold text-sm">Sistema Customizado</div><div class="text-xs text-gray-500">ERP, gestão ou automação</div></div>
+            </div>
+            <div class="service-option" data-service="E-commerce" onclick="selectService(this)">
+              <div class="check-circle"></div>
+              <div><div class="font-semibold text-sm">E-commerce</div><div class="text-xs text-gray-500">Loja virtual completa</div></div>
+            </div>
+          </div>
+          <button class="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-bold py-3 rounded-xl transition btn-glow" onclick="nextStep(2)">Continuar →</button>
+        </div>
+
+        <!-- Etapa 2: Data -->
+        <div id="step-2" style="display:none">
+          <p class="form-label">Escolha uma data</p>
+          <div class="calendar-nav">
+            <button onclick="changeMonth(-1)">‹</button>
+            <span class="calendar-month-year" id="calendar-month-year"></span>
+            <button onclick="changeMonth(1)">›</button>
+          </div>
+          <div class="calendar-grid" id="calendar-header">
+            <div class="calendar-day-header">Dom</div><div class="calendar-day-header">Seg</div><div class="calendar-day-header">Ter</div><div class="calendar-day-header">Qua</div><div class="calendar-day-header">Qui</div><div class="calendar-day-header">Sex</div><div class="calendar-day-header">Sáb</div>
+          </div>
+          <div class="calendar-grid" id="calendar-days"></div>
+          <div class="flex gap-3 mt-6">
+            <button class="flex-1 bg-white/5 hover:bg-white/10 text-white font-semibold py-3 rounded-xl transition border border-white/10" onclick="prevStep(1)">← Voltar</button>
+            <button class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-bold py-3 rounded-xl transition btn-glow" onclick="nextStep(3)">Continuar →</button>
+          </div>
+        </div>
+
+        <!-- Etapa 3: Horário -->
+        <div id="step-3" style="display:none">
+          <p class="form-label">Horários disponíveis para <span id="selected-date-display" class="text-emerald-400"></span></p>
+          <div class="time-slots" id="time-slots"></div>
+          <div class="flex gap-3 mt-6">
+            <button class="flex-1 bg-white/5 hover:bg-white/10 text-white font-semibold py-3 rounded-xl transition border border-white/10" onclick="prevStep(2)">← Voltar</button>
+            <button class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-bold py-3 rounded-xl transition btn-glow" onclick="nextStep(4)">Continuar →</button>
+          </div>
+        </div>
+
+        <!-- Etapa 4: Dados -->
+        <div id="step-4" style="display:none">
+          <p class="form-label">Seus dados</p>
+          <div class="space-y-4">
+            <div><label class="form-label">Nome completo</label><input type="text" class="form-input" placeholder="Seu nome" id="input-nome"></div>
+            <div><label class="form-label">WhatsApp</label><input type="tel" class="form-input" placeholder="(34) 99999-9999" id="input-whatsapp"></div>
+            <div><label class="form-label">Email</label><input type="email" class="form-input" placeholder="seu@email.com" id="input-email"></div>
+            <div><label class="form-label">Observações (opcional)</label><textarea class="form-input" rows="3" placeholder="Conte um pouco sobre seu projeto..." id="input-obs"></textarea></div>
+          </div>
+          <div class="flex gap-3 mt-6">
+            <button class="flex-1 bg-white/5 hover:bg-white/10 text-white font-semibold py-3 rounded-xl transition border border-white/10" onclick="prevStep(3)">← Voltar</button>
+            <button class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-bold py-3 rounded-xl transition btn-glow" onclick="confirmarAgendamento()">Confirmar Agendamento ✓</button>
+          </div>
+        </div>
+
+        <!-- Sucesso -->
+        <div id="step-success" style="display:none; text-align:center; padding: 20px 0;">
+          <div class="success-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+          <h4 class="text-2xl font-bold mb-2">Agendamento Confirmado!</h4>
+          <p class="text-gray-400 text-sm mb-1">Sua mensagem foi preparada! Clique no botão abaixo para enviar pelo WhatsApp.</p>
+          <div class="mt-4 p-4 bg-white/5 rounded-xl border border-white/5">
+            <div class="text-sm text-gray-400">Resumo do agendamento</div>
+            <div class="font-semibold text-emerald-400 mt-1" id="resumo-servico"></div>
+            <div class="text-sm text-gray-300 mt-1" id="resumo-datahora"></div>
+          </div>
+          <div class="flex flex-col gap-3 mt-6">
+            <a id="wa-redirect-link" href="https://wa.me/5534999545440" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-bold py-3 rounded-xl transition btn-glow flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Abrir WhatsApp
+            </a>
+            <button class="w-full bg-white/5 hover:bg-white/10 text-white font-semibold py-3 rounded-xl transition border border-white/10" onclick="closeModalDirect('modal-agendamento'); resetAgendamento();">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal ERP -->
+  <div id="modal-erp" class="modal-overlay" onclick="closeModal(event, 'modal-erp')">
+    <div class="modal-content" style="max-width: 700px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div><h3 class="text-xl font-bold">Dashboard ERP — Demonstração</h3><p class="text-sm text-gray-500 mt-1">Sistema de gestão em tempo real</p></div>
+        <button class="modal-close" onclick="closeModalDirect('modal-erp')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          <div class="erp-widget text-center cursor-pointer tooltip" data-tip="Clique para atualizar" onclick="updateERPStat(this)">
+            <div class="text-xs text-gray-500 mb-1">FATURAMENTO</div>
+            <div class="text-xl font-bold text-emerald-400 erp-value" data-target="48200">R$ 48.2k</div>
+            <div class="text-[10px] text-emerald-500 mt-1">↑ 18% este mês</div>
+          </div>
+          <div class="erp-widget text-center cursor-pointer tooltip" data-tip="Clique para atualizar" onclick="updateERPStat(this)">
+            <div class="text-xs text-gray-500 mb-1">PEDIDOS</div>
+            <div class="text-xl font-bold text-cyan-400 erp-value" data-target="350">350</div>
+            <div class="text-[10px] text-cyan-500 mt-1">↑ 24 novos hoje</div>
+          </div>
+          <div class="erp-widget text-center cursor-pointer tooltip" data-tip="Clique para atualizar" onclick="updateERPStat(this)">
+            <div class="text-xs text-gray-500 mb-1">CLIENTES</div>
+            <div class="text-xl font-bold text-amber-400 erp-value" data-target="1280">1.280</div>
+            <div class="text-[10px] text-amber-500 mt-1">↑ 45 novos</div>
+          </div>
+          <div class="erp-widget text-center cursor-pointer tooltip" data-tip="Clique para atualizar" onclick="updateERPStat(this)">
+            <div class="text-xs text-gray-500 mb-1">TAXA CONVERSÃO</div>
+            <div class="text-xl font-bold text-purple-400 erp-value" data-target="4.2">4.2%</div>
+            <div class="text-[10px] text-purple-500 mt-1">↑ 0.8% vs mês passado</div>
+          </div>
+        </div>
+
+        <div class="erp-widget mb-4">
+          <div class="flex justify-between items-center mb-3">
+            <span class="text-sm font-semibold">Vendas dos Últimos 7 Dias</span>
+            <button class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-lg hover:bg-emerald-500/20 transition" onclick="randomizeChart()">↻ Atualizar Dados</button>
+          </div>
+          <div class="flex items-end gap-2 h-32 px-2" id="chart-bars">
+            <div class="flex-1 bg-emerald-500/20 rounded-t chart-bar tooltip" data-tip="Seg: R$ 5.2k" style="height: 45%"></div>
+            <div class="flex-1 bg-emerald-500/30 rounded-t chart-bar tooltip" data-tip="Ter: R$ 7.8k" style="height: 65%"></div>
+            <div class="flex-1 bg-emerald-500/40 rounded-t chart-bar tooltip" data-tip="Qua: R$ 6.1k" style="height: 52%"></div>
+            <div class="flex-1 bg-emerald-500/50 rounded-t chart-bar tooltip" data-tip="Qui: R$ 9.2k" style="height: 78%"></div>
+            <div class="flex-1 bg-emerald-500/60 rounded-t chart-bar tooltip" data-tip="Sex: R$ 8.5k" style="height: 70%"></div>
+            <div class="flex-1 bg-emerald-500/70 rounded-t chart-bar tooltip" data-tip="Sáb: R$ 11.4k" style="height: 95%"></div>
+            <div class="flex-1 bg-emerald-500 rounded-t chart-bar tooltip" data-tip="Dom: R$ 4.3k" style="height: 38%"></div>
+          </div>
+          <div class="flex justify-between text-[10px] text-gray-500 mt-2 px-2">
+            <span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-3">
+          <div class="erp-widget">
+            <div class="text-sm font-semibold mb-3">Status dos Pedidos</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-xs text-gray-400 flex-1">Concluídos</span><span class="text-xs font-bold text-white">287</span></div>
+              <div class="h-1.5 bg-white/5 rounded-full"><div class="h-full bg-emerald-500 rounded-full" style="width: 82%"></div></div>
+              <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-cyan-500"></div><span class="text-xs text-gray-400 flex-1">Em processamento</span><span class="text-xs font-bold text-white">43</span></div>
+              <div class="h-1.5 bg-white/5 rounded-full"><div class="h-full bg-cyan-500 rounded-full" style="width: 12%"></div></div>
+              <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-500"></div><span class="text-xs text-gray-400 flex-1">Pendentes</span><span class="text-xs font-bold text-white">20</span></div>
+              <div class="h-1.5 bg-white/5 rounded-full"><div class="h-full bg-amber-500 rounded-full" style="width: 6%"></div></div>
+            </div>
+          </div>
+          <div class="erp-widget">
+            <div class="text-sm font-semibold mb-3">Alertas do Sistema</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 p-2 bg-amber-500/5 rounded-lg border border-amber-500/10">
+                <span class="text-amber-400 text-lg">⚠</span>
+                <div class="text-xs"><div class="text-gray-300">Estoque baixo: Camisetas P</div><div class="text-gray-500">Restam 12 unidades</div></div>
+              </div>
+              <div class="flex items-center gap-2 p-2 bg-emerald-500/5 rounded-lg border border-emerald-500/10">
+                <span class="text-emerald-400 text-lg">✓</span>
+                <div class="text-xs"><div class="text-gray-300">Backup automático</div><div class="text-gray-500">Concluído há 2h</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Cobrança -->
+  <div id="modal-cobranca" class="modal-overlay" onclick="closeModal(event, 'modal-cobranca')">
+    <div class="modal-content" style="max-width: 600px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div><h3 class="text-xl font-bold">Sistema de Cobrança</h3><p class="text-sm text-gray-500 mt-1">Demonstração de fluxo de pagamento</p></div>
+        <button class="modal-close" onclick="closeModalDirect('modal-cobranca')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-4">
+          <p class="form-label">Selecione um método de pagamento</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="pix-card selected" id="pay-pix" onclick="selectPayment('pix')">
+              <div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><span class="font-semibold text-sm">Pix</span></div>
+              <div class="text-xs text-gray-500">Pagamento instantâneo</div>
+            </div>
+            <div class="boleto-card" id="pay-boleto" onclick="selectPayment('boleto')">
+              <div class="flex items-center gap-2 mb-2"><div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center"><svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div><span class="font-semibold text-sm">Boleto</span></div>
+              <div class="text-xs text-gray-500">Vencimento em 3 dias</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="pix-area">
+          <div class="text-center p-6 bg-white/5 rounded-xl border border-white/5">
+            <div class="w-40 h-40 mx-auto bg-white rounded-xl p-3 mb-3">
+              <svg viewBox="0 0 100 100" class="w-full h-full">
+                <rect x="0" y="0" width="30" height="30" fill="#0a0e1a"/><rect x="5" y="5" width="20" height="20" fill="white"/><rect x="10" y="10" width="10" height="10" fill="#0a0e1a"/>
+                <rect x="70" y="0" width="30" height="30" fill="#0a0e1a"/><rect x="75" y="5" width="20" height="20" fill="white"/><rect x="80" y="10" width="10" height="10" fill="#0a0e1a"/>
+                <rect x="0" y="70" width="30" height="30" fill="#0a0e1a"/><rect x="5" y="75" width="20" height="20" fill="white"/><rect x="10" y="80" width="10" height="10" fill="#0a0e1a"/>
+                <rect x="35" y="5" width="5" height="5" fill="#0a0e1a"/><rect x="45" y="5" width="5" height="5" fill="#0a0e1a"/><rect x="55" y="5" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="35" y="15" width="5" height="5" fill="#0a0e1a"/><rect x="50" y="15" width="5" height="5" fill="#0a0e1a"/><rect x="60" y="15" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="40" y="25" width="5" height="5" fill="#0a0e1a"/><rect x="55" y="25" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="5" y="35" width="5" height="5" fill="#0a0e1a"/><rect x="15" y="35" width="5" height="5" fill="#0a0e1a"/><rect x="25" y="35" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="40" y="35" width="5" height="5" fill="#0a0e1a"/><rect x="50" y="35" width="5" height="5" fill="#0a0e1a"/><rect x="60" y="35" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="75" y="35" width="5" height="5" fill="#0a0e1a"/><rect x="85" y="35" width="5" height="5" fill="#0a0e1a"/><rect x="95" y="35" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="5" y="45" width="5" height="5" fill="#0a0e1a"/><rect x="20" y="45" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="35" y="45" width="5" height="5" fill="#0a0e1a"/><rect x="45" y="45" width="5" height="5" fill="#0a0e1a"/><rect x="55" y="45" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="70" y="45" width="5" height="5" fill="#0a0e1a"/><rect x="80" y="45" width="5" height="5" fill="#0a0e1a"/><rect x="90" y="45" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="10" y="55" width="5" height="5" fill="#0a0e1a"/><rect x="25" y="55" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="40" y="55" width="5" height="5" fill="#0a0e1a"/><rect x="50" y="55" width="5" height="5" fill="#0a0e1a"/><rect x="65" y="55" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="75" y="55" width="5" height="5" fill="#0a0e1a"/><rect x="85" y="55" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="5" y="65" width="5" height="5" fill="#0a0e1a"/><rect x="15" y="65" width="5" height="5" fill="#0a0e1a"/><rect x="30" y="65" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="45" y="65" width="5" height="5" fill="#0a0e1a"/><rect x="55" y="65" width="5" height="5" fill="#0a0e1a"/><rect x="65" y="65" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="80" y="65" width="5" height="5" fill="#0a0e1a"/><rect x="90" y="65" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="35" y="75" width="5" height="5" fill="#0a0e1a"/><rect x="45" y="75" width="5" height="5" fill="#0a0e1a"/><rect x="55" y="75" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="70" y="75" width="5" height="5" fill="#0a0e1a"/><rect x="80" y="75" width="5" height="5" fill="#0a0e1a"/><rect x="90" y="75" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="40" y="85" width="5" height="5" fill="#0a0e1a"/><rect x="50" y="85" width="5" height="5" fill="#0a0e1a"/><rect x="60" y="85" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="75" y="85" width="5" height="5" fill="#0a0e1a"/><rect x="85" y="85" width="5" height="5" fill="#0a0e1a"/><rect x="95" y="85" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="35" y="95" width="5" height="5" fill="#0a0e1a"/><rect x="50" y="95" width="5" height="5" fill="#0a0e1a"/><rect x="65" y="95" width="5" height="5" fill="#0a0e1a"/>
+                <rect x="80" y="95" width="5" height="5" fill="#0a0e1a"/><rect x="90" y="95" width="5" height="5" fill="#0a0e1a"/>
+              </svg>
+            </div>
+            <div class="text-sm font-mono text-gray-400 bg-black/30 px-4 py-2 rounded-lg inline-block select-all">00020126580014BR.GOV.BCB.PIX0136+55349995454405204000053039865802BR5913ARTHUR BARBOSA6009Uberlandia62070503***6304E2CA</div>
+            <div class="text-xs text-gray-500 mt-2">Escaneie com o app do seu banco</div>
+          </div>
+          <div class="mt-3 flex gap-2">
+            <button class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-bold py-2 rounded-lg text-sm transition" onclick="simulatePayment()">Simular Pagamento ✓</button>
+            <button class="flex-1 bg-white/5 hover:bg-white/10 text-white font-semibold py-2 rounded-lg text-sm transition border border-white/10" onclick="copyPix()">Copiar Código</button>
+          </div>
+        </div>
+
+        <div id="boleto-area" style="display:none">
+          <div class="p-4 bg-amber-500/5 rounded-xl border border-amber-500/10">
+            <div class="flex justify-between items-center mb-3"><span class="text-sm font-semibold text-amber-400">Boleto Bancário</span><span class="text-xs text-gray-500">Vence em 3 dias úteis</span></div>
+            <div class="font-mono text-xs text-gray-400 bg-black/30 p-3 rounded-lg break-all">34191.79001 01043.510047 91020.150008 9 89250000025000</div>
+            <div class="mt-3 flex gap-2">
+              <button class="flex-1 bg-amber-500 hover:bg-amber-400 text-[#0a0e1a] font-bold py-2 rounded-lg text-sm transition" onclick="simulatePayment()">Simular Pagamento ✓</button>
+              <button class="flex-1 bg-white/5 hover:bg-white/10 text-white font-semibold py-2 rounded-lg text-sm transition border border-white/10" onclick="copyBoleto()">Copiar Código</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="payment-success" style="display:none; text-align:center; padding: 20px 0;">
+          <div class="success-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+          <h4 class="text-xl font-bold mb-1">Pagamento Confirmado!</h4>
+          <p class="text-gray-400 text-sm">Transação processada com sucesso.</p>
+          <div class="mt-3 text-xs text-gray-500">ID: <span class="font-mono text-emerald-400">TXN-2026-06-06-8842</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal E-commerce -->
+  <div id="modal-ecommerce" class="modal-overlay" onclick="closeModal(event, 'modal-ecommerce')">
+    <div class="modal-content" style="max-width: 650px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div><h3 class="text-xl font-bold">Colizeu Sports — Preview</h3><p class="text-sm text-gray-500 mt-1">Demonstração do e-commerce</p></div>
+        <button class="modal-close" onclick="closeModalDirect('modal-ecommerce')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="flex items-center justify-between mb-4 p-3 bg-white/5 rounded-xl">
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-400">Carrinho:</span>
+            <span class="bg-emerald-500 text-[#0a0e1a] text-xs font-bold px-2 py-0.5 rounded-full" id="cart-count">0</span>
+            <span class="text-sm font-semibold" id="cart-total">R$ 0,00</span>
+          </div>
+          <button class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1.5 rounded-lg hover:bg-emerald-500/20 transition" onclick="checkout()">Finalizar Compra →</button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3" id="product-grid">
+          <div class="card rounded-xl p-3 cursor-pointer hover:border-emerald-500/30 transition" onclick="addToCart('Camiseta Esportiva', 89.90, this)">
+            <div class="aspect-square bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 rounded-lg mb-2 flex items-center justify-center">
+              <svg class="w-10 h-10 text-emerald-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            </div>
+            <div class="font-semibold text-sm">Camiseta Esportiva</div>
+            <div class="text-emerald-400 font-bold text-sm">R$ 89,90</div>
+            <div class="text-xs text-gray-500 mt-1">Adicionar ao carrinho</div>
+          </div>
+          <div class="card rounded-xl p-3 cursor-pointer hover:border-emerald-500/30 transition" onclick="addToCart('Tênis Running Pro', 349.90, this)">
+            <div class="aspect-square bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-lg mb-2 flex items-center justify-center">
+              <svg class="w-10 h-10 text-cyan-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div class="font-semibold text-sm">Tênis Running Pro</div>
+            <div class="text-emerald-400 font-bold text-sm">R$ 349,90</div>
+            <div class="text-xs text-gray-500 mt-1">Adicionar ao carrinho</div>
+          </div>
+          <div class="card rounded-xl p-3 cursor-pointer hover:border-emerald-500/30 transition" onclick="addToCart('Shorts Training', 69.90, this)">
+            <div class="aspect-square bg-gradient-to-br from-amber-500/10 to-orange-500/10 rounded-lg mb-2 flex items-center justify-center">
+              <svg class="w-10 h-10 text-amber-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="font-semibold text-sm">Shorts Training</div>
+            <div class="text-emerald-400 font-bold text-sm">R$ 69,90</div>
+            <div class="text-xs text-gray-500 mt-1">Adicionar ao carrinho</div>
+          </div>
+          <div class="card rounded-xl p-3 cursor-pointer hover:border-emerald-500/30 transition" onclick="addToCart('Mochila Esportiva', 129.90, this)">
+            <div class="aspect-square bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-lg mb-2 flex items-center justify-center">
+              <svg class="w-10 h-10 text-purple-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </div>
+            <div class="font-semibold text-sm">Mochila Esportiva</div>
+            <div class="text-emerald-400 font-bold text-sm">R$ 129,90</div>
+            <div class="text-xs text-gray-500 mt-1">Adicionar ao carrinho</div>
+          </div>
+        </div>
+
+        <div id="checkout-success" style="display:none; text-align:center; padding: 30px 0;">
+          <div class="success-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+          <h4 class="text-2xl font-bold mb-2">Pedido Realizado!</h4>
+          <p class="text-gray-400 text-sm">Seu pedido foi processado com sucesso.</p>
+          <div class="mt-4 p-4 bg-white/5 rounded-xl border border-white/5 text-left">
+            <div class="text-xs text-gray-500 mb-2">RESUMO DO PEDIDO</div>
+            <div id="checkout-items"></div>
+            <div class="border-t border-white/10 mt-2 pt-2 flex justify-between"><span class="text-sm text-gray-400">Total</span><span class="text-lg font-bold text-emerald-400" id="checkout-total"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Demo Geral -->
+  <div id="modal-demo" class="modal-overlay" onclick="closeModal(event, 'modal-demo')">
+    <div class="modal-content" style="max-width: 500px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div><h3 class="text-xl font-bold">Demonstrações Interativas</h3><p class="text-sm text-gray-500 mt-1">Toque para experimentar cada solução</p></div>
+        <button class="modal-close" onclick="closeModalDirect('modal-demo')"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="space-y-3">
+          <div class="card rounded-xl p-4 cursor-pointer hover:border-emerald-500/40 transition flex items-center gap-4" onclick="closeModalDirect('modal-demo'); openModal('modal-agendamento')">
+            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+            <div class="flex-1"><div class="font-semibold">Agendamento Inteligente</div><div class="text-xs text-gray-500">Calendário interativo com seleção de data/hora</div></div>
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="card rounded-xl p-4 cursor-pointer hover:border-emerald-500/40 transition flex items-center gap-4" onclick="closeModalDirect('modal-demo'); openModal('modal-erp')">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+            <div class="flex-1"><div class="font-semibold">Dashboard ERP</div><div class="text-xs text-gray-500">KPIs em tempo real com gráficos interativos</div></div>
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="card rounded-xl p-4 cursor-pointer hover:border-emerald-500/40 transition flex items-center gap-4" onclick="closeModalDirect('modal-demo'); openModal('modal-cobranca')">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg></div>
+            <div class="flex-1"><div class="font-semibold">Sistema de Cobrança</div><div class="text-xs text-gray-500">Pix e Boleto com QR Code e simulação</div></div>
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="card rounded-xl p-4 cursor-pointer hover:border-emerald-500/40 transition flex items-center gap-4" onclick="closeModalDirect('modal-demo'); openModal('modal-ecommerce')">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg></div>
+            <div class="flex-1"><div class="font-semibold">E-commerce Colizeu</div><div class="text-xs text-gray-500">Carrinho, checkout e finalização de compra</div></div>
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0a0e1a]/80 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2 font-bold text-lg">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-black">AB</div>
+        <span>Arthur<span class="text-emerald-400">.</span>dev</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm">
+        <a href="#sobre" class="text-gray-300 hover:text-emerald-400 transition">Sobre</a>
+        <a href="#servicos" class="text-gray-300 hover:text-emerald-400 transition">Serviços</a>
+        <a href="#projetos" class="text-gray-300 hover:text-emerald-400 transition">Projetos</a>
+        <a href="#faq" class="text-gray-300 hover:text-emerald-400 transition">Dúvidas</a>
+        <a href="#contato" class="text-gray-300 hover:text-emerald-400 transition">Contato</a>
+      </div>
+      <a href="https://wa.me/5534999545440?text=Oi%20Arthur!%20Vim%20pelo%20seu%20portf%C3%B3lio" target="_blank" class="hidden md:inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-semibold px-4 py-2 rounded-lg transition btn-glow">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Falar comigo
+      </a>
+      <button id="menu-btn" class="md:hidden text-white p-2 focus:outline-none">
+        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu md:hidden bg-[#0a0e1a]/95 backdrop-blur-lg border-b border-white/5">
+      <div class="px-6 pt-2 pb-6 flex flex-col gap-3 text-sm">
+        <a href="#sobre" class="text-gray-300 hover:text-emerald-400 py-2 border-b border-white/5">Sobre</a>
+        <a href="#servicos" class="text-gray-300 hover:text-emerald-400 py-2 border-b border-white/5">Serviços</a>
+        <a href="#projetos" class="text-gray-300 hover:text-emerald-400 py-2 border-b border-white/5">Projetos</a>
+        <a href="#faq" class="text-gray-300 hover:text-emerald-400 py-2 border-b border-white/5">Dúvidas</a>
+        <a href="#contato" class="text-gray-300 hover:text-emerald-400 py-2">Contato</a>
+        <a href="https://wa.me/5534999545440" target="_blank" class="mt-4 inline-flex items-center justify-center gap-2 bg-emerald-500 text-[#0a0e1a] font-semibold px-4 py-3 rounded-lg shadow-lg shadow-emerald-500/20">Falar no WhatsApp</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="home" class="relative pt-32 pb-20 md:pt-40 md:pb-32">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex items-center gap-2 mb-6 reveal">
+        <div class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></div>
+        <span class="text-emerald-400 text-sm font-medium tracking-wider uppercase">Disponível para novos projetos</span>
+      </div>
+      <h1 class="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight mb-6 reveal">
+        Eu construo sistemas<br>que <span class="gradient-text">fazem seu negócio</span><br><span class="gradient-text">vender mais.</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-400 max-w-2xl mb-10 leading-relaxed reveal">
+        Desenvolvedor web full-stack. Crio sites institucionais, landing pages de alta conversão e <span class="text-white font-medium">sistemas personalizados</span> projetados sob medida para automatizar os processos, a gestão e as vendas da sua empresa.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 mb-16 reveal">
+        <a href="https://wa.me/5534999545440?text=Oi%20Arthur!%20Tenho%20um%20projeto%20em%20mente" target="_blank" class="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-semibold px-7 py-4 rounded-xl transition btn-glow">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Vamos conversar?
+        </a>
+        <a href="#projetos" class="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold px-7 py-4 rounded-xl transition">Ver projetos <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></a>
+      </div>
+      <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 reveal">
+        <span class="text-gray-400 font-medium">Foco em Soluções:</span>
+        <span class="tag">E-commerce</span>
+        <span class="tag cyan">Sistemas de Gestão</span>
+        <span class="tag amber">Plataformas de Agendamento</span>
+        <span class="tag">Fluxos de Cobrança</span>
+        <span class="tag cyan">Landing Pages</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOBRE ===================== -->
+  <section id="sobre" class="py-20 md:py-28 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <span class="tag mb-4 inline-block">Sobre mim</span>
+          <h2 class="text-4xl md:text-5xl font-bold mb-6">Quem tá <span class="gradient-text">por trás</span> do código</h2>
+          <p class="text-gray-400 leading-relaxed mb-4">Sou o <span class="text-white font-medium">Arthur Barbosa</span>, desenvolvedor full-stack. Cursando Análise e Desenvolvimento de Sistemas, transformo problemas estruturais de negócios em soluções digitais robustas, ágeis e escaláveis que funcionam de verdade.</p>
+          <p class="text-gray-400 leading-relaxed mb-6">Minha abordagem é direta: <span class="text-emerald-400 font-medium">entender o problema de negócio, entregar a arquitetura ideal de software</span>, e seguir como parceiro de tecnologia e manutenção para que você possa focar exclusivamente no crescimento da sua empresa.</p>
+          <div class="grid grid-cols-2 gap-4 mt-8">
+            <div class="text-center p-4 card rounded-xl"><div class="text-2xl font-bold text-emerald-400">100%</div><div class="text-xs text-gray-500 mt-1">Foco no resultado</div></div>
+            <div class="text-center p-4 card rounded-xl"><div class="text-2xl font-bold text-cyan-400">Remoto / Presencial</div><div class="text-xs text-gray-500 mt-1">Atendimento sem fronteiras</div></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="card rounded-2xl p-8 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 blur-2xl"></div>
+            <div class="relative">
+              <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white text-3xl font-black mb-6">AB</div>
+              <h3 class="text-2xl font-bold mb-1">Arthur Barbosa</h3>
+              <p class="text-gray-400 text-sm mb-6">Desenvolvedor Full-Stack</p>
+              <div class="space-y-3 text-sm">
+                <div class="flex items-center gap-3 text-gray-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Atuando em todo o Brasil</div>
+                <div class="flex items-center gap-3 text-gray-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>ADS — Análise e Desenvolvimento de Sistemas</div>
+                <div class="flex items-center gap-3 text-gray-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>(34) 99954-5440</div>
+              </div>
+              <div class="mt-6 pt-6 border-t border-white/5 flex gap-3">
+                <a href="https://wa.me/5534999545440" target="_blank" class="flex-1 text-center bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-medium py-2 rounded-lg transition text-sm">WhatsApp</a>
+                <a href="mailto:arthurbarbosabrito8@gmail.com" class="flex-1 text-center bg-white/5 hover:bg-white/10 text-white font-medium py-2 rounded-lg transition text-sm">E-mail</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SERVIÇOS ===================== -->
+  <section id="servicos" class="py-20 md:py-28 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+        <span class="tag mb-4 inline-block">Serviços</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">O que eu <span class="gradient-text">entrego</span></h2>
+        <p class="text-gray-400">Soluções digitais robustas para empresas que buscam profissionalizar a presença online e automatizar processos complexos.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Sites Institucionais</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Estrutura profissional focada em autoridade de marca, SEO para o Google e geração de leads qualificados.</p>
+        </div>
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Landing Pages</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Páginas de alta performance e conversão otimizadas para campanhas de tráfego pago e lançamentos.</p>
+        </div>
+        <div class="card rounded-2xl p-6 reveal border-emerald-500/30">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center">
+              <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            </div>
+            <span class="tag amber text-xs">Principal</span>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Sistemas Customizados</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Desenvolvimento de plataformas completas, dashboards inteligentes e automações sob medida para a sua operação.</p>
+        </div>
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Suporte & Evolução</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Planos mensais de manutenção sob contrato. Monitoramento de segurança, backups e otimização contínua.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJETOS COM FUNCIONALIDADES ===================== -->
+  <section id="projetos" class="py-20 md:py-28 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+        <span class="tag mb-4 inline-block">Projetos</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Soluções de engenharia <span class="gradient-text">interativas</span></h2>
+        <p class="text-gray-400">Clique nos botões abaixo para experimentar cada solução em tempo real. Sistemas desenhados para resolver dores reais de faturamento, controle operacional e experiência do cliente.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6">
+
+        <!-- E-commerce -->
+        <div class="card rounded-2xl p-6 reveal lg:col-span-2">
+          <div class="text-center mb-6">
+            <div class="flex items-center justify-center gap-2 mb-3 flex-wrap">
+              <span class="tag">Produção Ativa</span>
+              <span class="tag amber">E-commerce Completo</span>
+            </div>
+            <h3 class="text-3xl font-bold mb-2">Colizeu Sports</h3>
+            <p class="text-gray-400 text-sm">Plataforma robusta de vendas com alto desempenho</p>
+          </div>
+          <div class="flex flex-col sm:flex-row justify-center gap-3 mb-6">
+            <a href="https://colizeu-sports.vercel.app" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-semibold px-6 py-3 rounded-xl transition btn-glow">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              Acessar plataforma live
+            </a>
+            <button onclick="openModal('modal-ecommerce')" class="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold px-6 py-3 rounded-xl transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Experimentar Preview
+            </button>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">Loja virtual de alta performance equipada com catálogo inteligente de produtos, múltiplos filtros de busca, carrinho dinâmico, área administrativa integrada com monitoramento de pedidos e checkout otimizado focado na conversão de vendas.</p>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <div class="bg-black/30 rounded-lg p-4 text-center"><div class="text-2xl font-bold text-emerald-400">100%</div><div class="text-xs text-gray-500 mt-1">Otimizado (Mobile First)</div></div>
+            <div class="bg-black/30 rounded-lg p-4 text-center"><div class="text-2xl font-bold text-cyan-400">Catálogo</div><div class="text-xs text-gray-500 mt-1">Dinâmico e Escalável</div></div>
+            <div class="bg-black/30 rounded-lg p-4 text-center"><div class="text-2xl font-bold text-amber-400">Dashboard</div><div class="text-xs text-gray-500 mt-1">Administrativo Nativo</div></div>
+          </div>
+        </div>
+
+        <!-- ERP -->
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between mb-4 flex-wrap gap-2">
+            <div>
+              <div class="flex items-center gap-2 mb-2"><span class="tag">Soluções Corporativas</span></div>
+              <h3 class="text-xl font-bold">Sistemas ERP & Gestão Integrada 📊</h3>
+              <p class="text-gray-400 text-sm mt-1">Mapeamento operacional, métricas de saúde e dashboards</p>
+            </div>
+          </div>
+          <div class="mockup mb-4">
+            <div class="mockup-bar">
+              <div class="mockup-dot bg-red-500"></div><div class="mockup-dot bg-yellow-500"></div><div class="mockup-dot bg-green-500"></div>
+              <span class="text-gray-500 ml-2">gestao.arthurbarbosa.dev</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mt-3">
+              <div class="bg-emerald-500/10 border border-emerald-500/20 rounded p-2"><div class="text-emerald-400 text-[10px]">FATURAMENTO</div><div class="text-white font-bold">R$ 48.2k</div><div class="text-emerald-400 text-[9px]">↑ 18% este mês</div></div>
+              <div class="bg-cyan-500/10 border border-cyan-500/20 rounded p-2"><div class="text-cyan-400 text-[10px]">PRODUTIVIDADE</div><div class="text-white font-bold">94.2%</div><div class="text-cyan-400 text-[9px]">metas atingidas</div></div>
+              <div class="bg-amber-500/10 border border-amber-500/20 rounded p-2"><div class="text-amber-400 text-[10px]">OPERACIONAL</div><div class="text-white font-bold">350</div><div class="text-amber-400 text-[9px]">pedidos concluídos</div></div>
+            </div>
+            <div class="mt-3 space-y-1">
+              <div class="flex justify-between text-[10px] text-gray-400"><span>Eficiência Logística</span><span class="text-white">88%</span></div>
+              <div class="h-1.5 bg-white/5 rounded"><div class="h-full bg-emerald-500 rounded" style="width:88%"></div></div>
+              <div class="flex justify-between text-[10px] text-gray-400 mt-2"><span>Retenção de Clientes</span><span class="text-white">74%</span></div>
+              <div class="h-1.5 bg-white/5 rounded"><div class="h-full bg-cyan-500 rounded" style="width:74%"></div></div>
+            </div>
+          </div>
+          <button onclick="openModal('modal-erp')" class="w-full mb-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold py-2.5 rounded-xl transition flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            Experimentar Dashboard Interativo
+          </button>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Dashboards gerenciais com indicadores em tempo real (KPIs)</li>
+            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Controle rígido de estoque, insumos e fluxo de pedidos</li>
+            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Níveis de acesso customizados por tipo de colaborador</li>
+            <li class="flex gap-2"><span class="text-emerald-400">✓</span> Relatórios estratégicos automatizados para tomada de decisão</li>
+          </ul>
+        </div>
+
+        <!-- Agendamento -->
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between mb-4 flex-wrap gap-2">
+            <div>
+              <div class="flex items-center gap-2 mb-2"><span class="tag cyan">Automação de Agenda</span></div>
+              <h3 class="text-xl font-bold">Plataformas de Agendamento Inteligente ⏳</h3>
+              <p class="text-gray-400 text-sm mt-1">Sistemas de reserva, controle de turnos e salas</p>
+            </div>
+          </div>
+          <div class="mockup mb-4">
+            <div class="mockup-bar">
+              <div class="mockup-dot bg-red-500"></div><div class="mockup-dot bg-yellow-500"></div><div class="mockup-dot bg-green-500"></div>
+              <span class="text-gray-500 ml-2">agenda.arthurbarbosa.dev</span>
+            </div>
+            <div class="mt-3 bg-white/5 rounded p-2">
+              <div class="text-[10px] text-gray-400 mb-2">OCUPAÇÃO DE HORÁRIOS DISPONÍVEIS</div>
+              <div class="flex items-end gap-1 h-12">
+                <div class="flex-1 bg-cyan-500/40 rounded-t" style="height:70%"></div>
+                <div class="flex-1 bg-cyan-500/60 rounded-t" style="height:85%"></div>
+                <div class="flex-1 bg-cyan-500/80 rounded-t" style="height:95%"></div>
+                <div class="flex-1 bg-cyan-500/60 rounded-t" style="height:80%"></div>
+                <div class="flex-1 bg-cyan-500/90 rounded-t" style="height:100%"></div>
+                <div class="flex-1 bg-cyan-500/50 rounded-t" style="height:40%"></div>
+                <div class="flex-1 bg-cyan-500/30 rounded-t" style="height:20%"></div>
+              </div>
+              <div class="flex justify-between text-[8px] text-gray-500 mt-1">
+                <span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SAB</span><span>DOM</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="openModal('modal-agendamento')" class="w-full mb-4 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 font-semibold py-2.5 rounded-xl transition flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Abrir Calendário e Agendar
+          </button>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li class="flex gap-2"><span class="text-cyan-400">✓</span> Grade horária automatizada com prevenção de conflito/choque</li>
+            <li class="flex gap-2"><span class="text-cyan-400">✓</span> Disparo automático de notificações de confirmação</li>
+            <li class="flex gap-2"><span class="text-cyan-400">✓</span> Divisão inteligente de serviços por profissional ou recurso</li>
+            <li class="flex gap-2"><span class="text-cyan-400">✓</span> Histórico completo de frequência e preferências de clientes</li>
+          </ul>
+        </div>
+
+        <!-- Cobrança -->
+        <div class="card rounded-2xl p-6 reveal lg:col-span-2">
+          <div class="flex items-start justify-between mb-4 flex-wrap gap-2">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="tag amber">Fintech & Financeiro</span>
+                <span class="tag font-bold">+ Segurança de Dados</span>
+              </div>
+              <h3 class="text-xl font-bold">Motores de Cobrança & Recorrência Automatizada 💳</h3>
+              <p class="text-gray-400 text-sm mt-1">Sistemas de faturamento, conciliação e redução de inadimplência</p>
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="mockup">
+              <div class="mockup-bar">
+                <div class="mockup-dot bg-red-500"></div><div class="mockup-dot bg-yellow-500"></div><div class="mockup-dot bg-green-500"></div>
+                <span class="text-gray-500 ml-2">cobranca.arthurbarbosa.dev</span>
+              </div>
+              <div class="mt-3 space-y-1.5 text-[10px]">
+                <div class="flex items-center gap-2 bg-emerald-500/10 border-l-2 border-emerald-500 p-1.5 rounded"><span class="text-gray-400">Fatura #4029</span><span class="text-white">Liquidada via Pix</span><span class="text-emerald-400 ml-auto">R$ 250,00</span></div>
+                <div class="flex items-center gap-2 bg-cyan-500/10 border-l-2 border-cyan-500 p-1.5 rounded"><span class="text-gray-400">Recorrência</span><span class="text-white">Cartão Processado</span><span class="text-cyan-400 ml-auto">R$ 119,90</span></div>
+                <div class="flex items-center gap-2 bg-amber-500/10 border-l-2 border-amber-500 p-1.5 rounded"><span class="text-gray-400">Alerta</span><span class="text-white">Lembrete de Vencimento</span><span class="text-amber-400 ml-auto">WhatsApp</span></div>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center">
+              <p class="text-sm text-gray-400 leading-relaxed mb-4">Sistemas construídos para blindar o fluxo de caixa. Ideais para empresas que trabalham com mensalidades, assinaturas, venda parcelada ou prestação de serviços continuados.</p>
+              <button onclick="openModal('modal-cobranca')" class="mb-4 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-400 font-semibold py-2.5 rounded-xl transition flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                Simular Pagamento (Pix/Boleto)
+              </button>
+              <ul class="text-sm text-gray-400 space-y-1">
+                <li class="flex gap-2"><span class="text-amber-400">✓</span> Integração nativa com Gateways (Pix, Boleto e Cartão)</li>
+                <li class="flex gap-2"><span class="text-amber-400">✓</span> Régua de cobrança automática pré e pós vencimento</li>
+                <li class="flex gap-2"><span class="text-amber-400">✓</span> Painel de controle de inadimplência e conciliação bancária</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESSO ===================== -->
+  <section id="processo" class="py-20 md:py-28 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+        <span class="tag mb-4 inline-block">Como trabalho</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Do <span class="gradient-text">"oi"</span> à entrega</h2>
+        <p class="text-gray-400">Um processo transparente, ágil e focado em engenharia de valor, sem surpresas no final.</p>
+      </div>
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="card rounded-2xl p-6 reveal relative">
+          <div class="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-bold">1</div>
+          <h3 class="text-lg font-bold mb-2 mt-2">Alinhamento</h3>
+          <p class="text-sm text-gray-400">Mapeamento das necessidades do seu negócio e gargalos operacionais.</p>
+        </div>
+        <div class="card rounded-2xl p-6 reveal relative">
+          <div class="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-bold">2</div>
+          <h3 class="text-lg font-bold mb-2 mt-2">Escopo & Proposta</h3>
+          <p class="text-sm text-gray-400">Definição clara das funcionalidades do sistema, prazos de entrega e valores.</p>
+        </div>
+        <div class="card rounded-2xl p-6 reveal relative">
+          <div class="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-bold">3</div>
+          <h3 class="text-lg font-bold mb-2 mt-2">Desenvolvimento</h3>
+          <p class="text-sm text-gray-400">Construção iterativa. Você acompanha as entregas de cada módulo de perto.</p>
+        </div>
+        <div class="card rounded-2xl p-6 reveal relative">
+          <div class="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-bold">4</div>
+          <h3 class="text-lg font-bold mb-2 mt-2">Deploy & Homologação</h3>
+          <p class="text-sm text-gray-400">Lançamento do sistema em produção, treinamento da equipe e início do suporte.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq" class="py-20 md:py-28 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+        <span class="tag mb-4 inline-block">Dúvidas Frequentes</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Perguntas <span class="gradient-text">comuns</span></h2>
+        <p class="text-gray-400">Tire suas dúvidas sobre processo, valores e entregas. Se não encontrar o que procura, me chama no WhatsApp.</p>
+      </div>
+      <div class="space-y-2 reveal">
+        <div class="faq-item card rounded-xl px-6">
+          <div class="faq-question"><span class="font-semibold text-white">Quanto tempo leva para desenvolver um sistema?</span><svg class="faq-icon w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></div>
+          <div class="faq-answer">Depende da complexidade. Um site institucional leva de 5 a 10 dias úteis. Já sistemas personalizados com dashboard e automações podem levar de 3 a 8 semanas. Sempre apresento um cronograma detalhado na proposta.</div>
+        </div>
+        <div class="faq-item card rounded-xl px-6">
+          <div class="faq-question"><span class="font-semibold text-white">Como funciona o pagamento?</span><svg class="faq-icon w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></div>
+          <div class="faq-answer">Trabalho com parcelamento em 2 ou 3 vezes: 50% na aprovação da proposta, 25% na entrega da versão beta e 25% no deploy final. Para projetos maiores, podemos negociar um fluxo personalizado.</div>
+        </div>
+        <div class="faq-item card rounded-xl px-6">
+          <div class="faq-question"><span class="font-semibold text-white">Você faz manutenção após a entrega?</span><svg class="faq-icon w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></div>
+          <div class="faq-answer">Sim! Ofereço planos mensais de suporte que incluem monitoramento, backups, pequenas atualizações e segurança. Você foca no negócio e eu cuido da tecnologia rodando.</div>
+        </div>
+        <div class="faq-item card rounded-xl px-6">
+          <div class="faq-question"><span class="font-semibold text-white">O sistema vai funcionar no celular?</span><svg class="faq-icon w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></div>
+          <div class="faq-answer">Absolutamente. Todo projeto é desenvolvido com abordagem Mobile First, ou seja, otimizado para celular desde o primeiro dia. Tablets e desktops também são totalmente responsivos.</div>
+        </div>
+        <div class="faq-item card rounded-xl px-6">
+          <div class="faq-question"><span class="font-semibold text-white">Meu negócio é pequeno, ainda vale a pena?</span><svg class="faq-icon w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></div>
+          <div class="faq-answer">Com certeza. Muitos dos meus clientes começaram com uma landing page ou um sistema simples de agendamento. A ideia é criar uma solução que cresça junto com seu negócio, sem desperdiçar investimento.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTATO ===================== -->
+  <section id="contato" class="py-20 md:py-28 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="card rounded-3xl p-8 md:p-16 text-center relative overflow-hidden reveal">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 blur-3xl -z-0"></div>
+        <div class="relative">
+          <span class="tag mb-6 inline-block">Bora começar?</span>
+          <h2 class="text-4xl md:text-6xl font-black mb-6">Tem um projeto<br><span class="gradient-text">em mente?</span></h2>
+          <p class="text-lg text-gray-400 max-w-xl mx-auto mb-10">Me chama no WhatsApp. Vamos desenhar juntos o sistema ideal para otimizar o faturamento e a escala da sua operação.</p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="https://wa.me/5534999545440?text=Oi%20Arthur!%20Vim%20pelo%20seu%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20um%20projeto" target="_blank" class="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-[#0a0e1a] font-semibold px-8 py-4 rounded-xl transition btn-glow text-lg">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Chamar no WhatsApp
+            </a>
+            <a href="mailto:arthurbarbosabrito8@gmail.com" class="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold px-8 py-4 rounded-xl transition">Enviar e-mail</a>
+          </div>
+          <div class="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>Atendimento Digital & Presencial</div>
+            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>arthurbarbosabrito8@gmail.com</div>
+            <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>(34) 99954-5440</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="border-t border-white/5 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+      <div>© 2026 Arthur Barbosa. Desenvolvendo soluções com alta performance.</div>
+      <div class="flex gap-4">
+        <a href="https://wa.me/5534999545440" target="_blank" class="hover:text-emerald-400 transition">WhatsApp</a>
+        <a href="mailto:arthurbarbosabrito8@gmail.com" class="hover:text-emerald-400 transition">E-mail</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp flutuante mobile -->
+  <a href="https://wa.me/5534999545440" target="_blank" class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg float-bounce z-40">
+    <svg class="w-7 h-7 text-[#0a0e1a]" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <script>
+    // ===================== MENU MOBILE =====================
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // ===================== SCROLL REVEAL =====================
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ===================== FAQ ACCORDION =====================
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const item = question.parentElement;
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
+      });
+    });
+
+    // ===================== MODAL SYSTEM =====================
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+      document.body.style.overflow = 'hidden';
+      if (id === 'modal-agendamento') { initCalendar(); }
+    }
+    function closeModal(event, id) {
+      if (event.target.id === id) { closeModalDirect(id); }
+    }
+    function closeModalDirect(id) {
+      document.getElementById(id).classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    function openDemoModal() { openModal('modal-demo'); }
+
+    // ===================== AGENDAMENTO - CALENDÁRIO =====================
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let selectedDate = null;
+    let selectedService = 'Site Institucional';
+    let selectedTime = null;
+    const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+    function initCalendar() {
+      renderCalendar();
+    }
+    function renderCalendar() {
+      document.getElementById('calendar-month-year').textContent = monthNames[currentMonth] + ' ' + currentYear;
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const today = new Date();
+      let html = '';
+      for (let i = 0; i < firstDay; i++) html += '<div class="calendar-day disabled"></div>';
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(currentYear, currentMonth, d);
+        const isToday = date.toDateString() === today.toDateString();
+        const isPast = date < new Date(today.setHours(0,0,0,0));
+        const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+        let classes = 'calendar-day';
+        if (isPast) classes += ' disabled';
+        if (isToday) classes += ' today';
+        if (isSelected) classes += ' selected';
+        if (!isPast) {
+          html += '<div class="' + classes + '" onclick="selectDate(' + currentYear + ',' + currentMonth + ',' + d + ')">' + d + '</div>';
+        } else {
+          html += '<div class="' + classes + '">' + d + '</div>';
+        }
+      }
+      document.getElementById('calendar-days').innerHTML = html;
+    }
+    function changeMonth(delta) {
+      currentMonth += delta;
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      renderCalendar();
+    }
+    function selectDate(y, m, d) {
+      selectedDate = new Date(y, m, d);
+      renderCalendar();
+      generateTimeSlots();
+    }
+    function generateTimeSlots() {
+      const slots = ['09:00','09:30','10:00','10:30','11:00','14:00','14:30','15:00','15:30','16:00','16:30','17:00'];
+      const container = document.getElementById('time-slots');
+      let html = '';
+      slots.forEach((slot, i) => {
+        const disabled = Math.random() > 0.7;
+        let classes = 'time-slot';
+        if (disabled) classes += ' disabled';
+        if (selectedTime === slot) classes += ' selected';
+        html += '<div class="' + classes + '" ' + (disabled ? '' : 'onclick="selectTime(\'' + slot + '\')"') + '>' + slot + '</div>';
+      });
+      container.innerHTML = html;
+    }
+    function selectTime(time) {
+      selectedTime = time;
+      generateTimeSlots();
+    }
+    function selectService(el) {
+      document.querySelectorAll('.service-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedService = el.dataset.service;
+    }
+    function nextStep(step) {
+      if (step === 3 && !selectedDate) { showToast('Selecione uma data primeiro', 'warning'); return; }
+      if (step === 4 && !selectedTime) { showToast('Selecione um horário', 'warning'); return; }
+      for (let i = 1; i <= 4; i++) document.getElementById('step-' + i).style.display = 'none';
+      document.getElementById('step-' + step).style.display = 'block';
+      document.getElementById('agendamento-progress').style.width = (step * 25) + '%';
+      for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById('dot-' + i);
+        dot.classList.remove('active', 'completed');
+        if (i < step) dot.classList.add('completed');
+        if (i === step) dot.classList.add('active');
+      }
+      if (step === 3 && selectedDate) {
+        document.getElementById('selected-date-display').textContent = selectedDate.toLocaleDateString('pt-BR', {day:'numeric', month:'long'});
+      }
+    }
+    function prevStep(step) {
+      for (let i = 1; i <= 4; i++) document.getElementById('step-' + i).style.display = 'none';
+      document.getElementById('step-' + step).style.display = 'block';
+      document.getElementById('agendamento-progress').style.width = (step * 25) + '%';
+      for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById('dot-' + i);
+        dot.classList.remove('active', 'completed');
+        if (i < step) dot.classList.add('completed');
+        if (i === step) dot.classList.add('active');
+      }
+    }
+    function confirmarAgendamento() {
+      const nome = document.getElementById('input-nome').value.trim();
+      const whatsapp = document.getElementById('input-whatsapp').value.trim();
+      const email = document.getElementById('input-email').value.trim();
+      const obs = document.getElementById('input-obs').value.trim();
+
+      if (!nome || !whatsapp) { showToast('Preencha nome e WhatsApp', 'warning'); return; }
+      if (!selectedDate || !selectedTime) { showToast('Selecione data e horário', 'warning'); return; }
+
+      // Formata a mensagem para o WhatsApp
+      const dataFormatada = selectedDate.toLocaleDateString('pt-BR', {day:'2-digit', month:'long', year:'numeric'});
+      let mensagem = 'Oi Arthur! Vim pelo seu portfólio e quero agendar uma reunião.%0A%0A';
+      mensagem += '*Serviço:* ' + selectedService + '%0A';
+      mensagem += '*Data:* ' + dataFormatada + '%0A';
+      mensagem += '*Horário:* ' + selectedTime + '%0A';
+      mensagem += '*Nome:* ' + nome + '%0A';
+      mensagem += '*WhatsApp:* ' + whatsapp;
+      if (email) mensagem += '%0A*Email:* ' + email;
+      if (obs) mensagem += '%0A%0A*Observações:* ' + obs;
+      mensagem += '%0A%0APode confirmar esse horário?';
+
+      // Abre o WhatsApp com a mensagem
+      const waUrl = 'https://wa.me/5534999545440?text=' + mensagem;
+      window.open(waUrl, '_blank');
+
+      // Mostra tela de sucesso
+      document.getElementById('step-4').style.display = 'none';
+      document.getElementById('step-success').style.display = 'block';
+      document.getElementById('resumo-servico').textContent = selectedService;
+      document.getElementById('resumo-datahora').textContent = dataFormatada + ' às ' + selectedTime;
+      createConfetti();
+      showToast('Redirecionando para o WhatsApp...', 'success');
+    }
+    function resetAgendamento() {
+      selectedDate = null; selectedTime = null; currentMonth = new Date().getMonth(); currentYear = new Date().getFullYear();
+      document.getElementById('step-success').style.display = 'none';
+      document.getElementById('step-1').style.display = 'block';
+      document.getElementById('agendamento-progress').style.width = '25%';
+      for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById('dot-' + i);
+        dot.classList.remove('active', 'completed');
+        if (i === 1) dot.classList.add('active');
+      }
+      document.getElementById('input-nome').value = '';
+      document.getElementById('input-whatsapp').value = '';
+      document.getElementById('input-email').value = '';
+      document.getElementById('input-obs').value = '';
+    }
+
+    // ===================== ERP DASHBOARD =====================
+    function updateERPStat(el) {
+      const valueEl = el.querySelector('.erp-value');
+      const target = parseFloat(valueEl.dataset.target);
+      const variation = (Math.random() * 0.4 - 0.2);
+      const newVal = Math.round(target * (1 + variation));
+      if (valueEl.textContent.includes('R$')) {
+        valueEl.textContent = 'R$ ' + (newVal / 1000).toFixed(1) + 'k';
+      } else if (valueEl.textContent.includes('%')) {
+        valueEl.textContent = (newVal / 100).toFixed(1) + '%';
+      } else {
+        valueEl.textContent = newVal.toLocaleString('pt-BR');
+      }
+      el.style.transform = 'scale(1.05)';
+      setTimeout(() => el.style.transform = 'scale(1)', 200);
+      showToast('Dados atualizados em tempo real!', 'success');
+    }
+    function randomizeChart() {
+      const bars = document.querySelectorAll('#chart-bars .chart-bar');
+      const days = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+      bars.forEach((bar, i) => {
+        const h = Math.floor(Math.random() * 60 + 30);
+        bar.style.height = h + '%';
+        const val = (h * 0.12).toFixed(1);
+        bar.dataset.tip = days[i] + ': R$ ' + val + 'k';
+      });
+      showToast('Gráfico atualizado!', 'success');
+    }
+
+    // ===================== COBRANÇA =====================
+    function selectPayment(method) {
+      document.getElementById('pay-pix').classList.remove('selected');
+      document.getElementById('pay-boleto').classList.remove('selected');
+      document.getElementById('pay-' + method).classList.add('selected');
+      if (method === 'pix') {
+        document.getElementById('pix-area').style.display = 'block';
+        document.getElementById('boleto-area').style.display = 'none';
+      } else {
+        document.getElementById('pix-area').style.display = 'none';
+        document.getElementById('boleto-area').style.display = 'block';
+      }
+    }
+    function simulatePayment() {
+      document.getElementById('pix-area').style.display = 'none';
+      document.getElementById('boleto-area').style.display = 'none';
+      document.getElementById('payment-success').style.display = 'block';
+      createConfetti();
+      showToast('Pagamento processado com sucesso!', 'success');
+    }
+    function copyPix() {
+      navigator.clipboard.writeText('00020126580014BR.GOV.BCB.PIX0136+55349995454405204000053039865802BR5913ARTHUR BARBOSA6009Uberlandia62070503***6304E2CA');
+      showToast('Código Pix copiado!', 'success');
+    }
+    function copyBoleto() {
+      navigator.clipboard.writeText('34191.79001 01043.510047 91020.150008 9 89250000025000');
+      showToast('Código de barras copiado!', 'success');
+    }
+
+    // ===================== E-COMMERCE =====================
+    let cart = [];
+    function addToCart(name, price, el) {
+      cart.push({ name, price });
+      updateCart();
+      el.style.transform = 'scale(0.95)';
+      setTimeout(() => el.style.transform = '', 150);
+      showToast(name + ' adicionado ao carrinho!', 'success');
+    }
+    function updateCart() {
+      const count = cart.length;
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('cart-total').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    }
+    function checkout() {
+      if (cart.length === 0) { showToast('Adicione itens ao carrinho primeiro', 'warning'); return; }
+      document.getElementById('product-grid').style.display = 'none';
+      document.getElementById('checkout-success').style.display = 'block';
+      const itemsContainer = document.getElementById('checkout-items');
+      let html = '';
+      cart.forEach(item => {
+        html += '<div class="flex justify-between text-sm py-1"><span class="text-gray-300">' + item.name + '</span><span class="text-emerald-400">R$ ' + item.price.toFixed(2).replace('.', ',') + '</span></div>';
+      });
+      itemsContainer.innerHTML = html;
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      document.getElementById('checkout-total').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+      createConfetti();
+      showToast('Compra finalizada!', 'success');
+    }
+
+    // ===================== TOAST =====================
+    function showToast(message, type) {
+      const existing = document.querySelector('.toast');
+      if (existing) existing.remove();
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      const iconColor = type === 'success' ? '#10b981' : '#f59e0b';
+      const iconSvg = type === 'success'
+        ? '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
+        : '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+      toast.innerHTML = '<div class="toast-icon" style="background:' + iconColor + '15;color:' + iconColor + '">' + iconSvg + '</div><div><div class="text-sm font-semibold">' + message + '</div></div>';
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('hiding');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // ===================== CONFETTI =====================
+    function createConfetti() {
+      const colors = ['#10b981', '#06b6d4', '#f59e0b', '#8b5cf6', '#ec4899'];
+      for (let i = 0; i < 30; i++) {
+        const conf = document.createElement('div');
+        conf.className = 'confetti';
+        conf.style.left = Math.random() * 100 + 'vw';
+        conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+        conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        conf.style.width = (Math.random() * 8 + 4) + 'px';
+        conf.style.height = (Math.random() * 8 + 4) + 'px';
+        conf.style.animationDelay = (Math.random() * 0.5) + 's';
+        conf.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 2500);
+      }
+    }
+  </script>
+</body>
+</html>
